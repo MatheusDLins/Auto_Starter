@@ -2,7 +2,6 @@ import customtkinter as ctk
 import json
 import os
 from tkinter import messagebox
-from utils.launcher import abrir_itens
 
 CONFIG_PATH = "config.json"
 
@@ -52,14 +51,14 @@ class AutoStarterApp(ctk.CTk):
     def criar_pagina_inicio(self):
         frame = ctk.CTkFrame(self)
 
-        self.entry_busca = ctk.CTkEntry(frame, placeholder_text="Buscar site...")
+        self.entry_busca = ctk.CTkEntry(frame, placeholder_text="Buscar registro...")
         self.entry_busca.pack(padx=10, pady=(10, 5), fill="x")
         self.entry_busca.bind("<KeyRelease>", self.filtrar_lista)
 
         btns = ctk.CTkFrame(frame)
         btns.pack(pady=5)
 
-        ctk.CTkButton(btns, text="Adicionar Site", command=self.adicionar_site).grid(row=0, column=0, padx=5)
+        ctk.CTkButton(btns, text="Adicionar", command=self.adicionar_site).grid(row=0, column=0, padx=5)
         ctk.CTkButton(btns,text="Executar Todos",command=self.executar_sites,fg_color="#28a745",hover_color="#218838").grid(row=0, column=1, padx=5)
 
         ctk.CTkButton(btns, text="Excluir Todos", command=self.confirmar_excluir_todos).grid(row=0, column=2, padx=5)
@@ -93,7 +92,7 @@ class AutoStarterApp(ctk.CTk):
                 linha = ctk.CTkFrame(self.scroll_frame)
                 linha.pack(fill="x", padx=5, pady=2)
 
-                label = ctk.CTkLabel(linha, text=f"[Site] {item['nome']}", anchor="w")
+                label = ctk.CTkLabel(linha, text=f" {item['nome']}", anchor="w")
                 label.pack(side="left", expand=True, padx=5)
 
                 ctk.CTkButton(linha, text="Editar", width=70, command=lambda i=item: self.editar_item(i)).pack(side="right", padx=2)
@@ -107,7 +106,7 @@ class AutoStarterApp(ctk.CTk):
 
     def abrir_janela_edicao(self, item=None):
         janela = ctk.CTkToplevel(self)
-        janela.title("Editar Site" if item else "Novo Site")
+        janela.title("Editar Registro" if item else "Novo Registro")
         janela.geometry("300x280")
         janela.grab_set()
 
@@ -147,7 +146,7 @@ class AutoStarterApp(ctk.CTk):
             self.atualizar_lista()
 
     def confirmar_excluir_todos(self):
-        if messagebox.askyesno("Confirmação", "Deseja realmente excluir todos os sites?"):
+        if messagebox.askyesno("Confirmação", "Deseja realmente excluir todos os registros?"):
             self.config = {"sites": [], "tema": self.config.get("tema", "System")}
             self.salvar_config()
             self.atualizar_lista()
