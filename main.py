@@ -3,13 +3,12 @@ from tkinter import messagebox, simpledialog
 import json
 import os
 from utils.launcher import abrir_itens
-from utils.autostart import configurar_startup
 
 CONFIG_PATH = "config.json"
 
 def carregar_config():
     if not os.path.exists(CONFIG_PATH):
-        return {"sites": [], "apps": [], "auto_start": False}
+        return {"sites": [], "apps": []}
     with open(CONFIG_PATH, "r") as f:
         return json.load(f)
 
@@ -48,12 +47,7 @@ def atualizar_lista():
 def executar_itens():
     abrir_itens(config)
 
-def toggle_auto_start():
-    config["auto_start"] = not config["auto_start"]
-    salvar_config(config)
-    configurar_startup(config["auto_start"])
-    status = "ativado" if config["auto_start"] else "desativado"
-    messagebox.showinfo("Inicialização automática", f"Inicialização automática {status}.")
+
 
 # Interface
 config = carregar_config()
@@ -70,7 +64,6 @@ tk.Button(btn_frame, text="Adicionar Site", command=lambda: adicionar_item("site
 tk.Button(btn_frame, text="Adicionar App", command=lambda: adicionar_item("app")).grid(row=0, column=1, padx=5)
 tk.Button(btn_frame, text="Remover", command=remover_item).grid(row=0, column=2, padx=5)
 tk.Button(btn_frame, text="Executar Todos", command=executar_itens).grid(row=0, column=3, padx=5)
-tk.Button(btn_frame, text="Auto Start", command=toggle_auto_start).grid(row=0, column=4, padx=5)
 
 atualizar_lista()
 root.mainloop()

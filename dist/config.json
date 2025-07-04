@@ -2,6 +2,5 @@
     "sites": [
         "google.com"
     ],
-    "apps": [],
-    "auto_start": false
+    "apps": []
 }
