@@ -46,7 +46,7 @@ Auto_Starter/
 ├── interface/
 │   └── app.py              # Interface com CustomTkinter
 └── README.md
-
+```
 
 ### 🖥️ Interface do programa e como usar:
 
